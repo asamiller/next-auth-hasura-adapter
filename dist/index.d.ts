@@ -1,7 +1,7 @@
 import { Adapter } from "next-auth/adapters";
 type HasuraAdapterArgs = {
     endpoint: string;
-    adminSecret: string;
+    authToken: string;
 };
-export declare const HasuraAdapter: ({ endpoint, adminSecret, }: HasuraAdapterArgs) => Adapter;
+export declare const HasuraAdapter: ({ endpoint, authToken, }: HasuraAdapterArgs) => Adapter;
 export {};

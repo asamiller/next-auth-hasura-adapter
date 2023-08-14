@@ -14,10 +14,10 @@ const transformDate = (object, key) => {
     }
     return object;
 };
-const HasuraAdapter = ({ endpoint, adminSecret, }) => {
+const HasuraAdapter = ({ endpoint, authToken, }) => {
     const client = new graphql_request_1.GraphQLClient(endpoint, {
         headers: {
-            ["x-hasura-admin-secret"]: adminSecret,
+            Authorization: `Bearer ${authToken}`,
         },
     });
     const sdk = (0, graphql_1.getSdk)(client);

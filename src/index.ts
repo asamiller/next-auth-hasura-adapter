@@ -11,7 +11,7 @@ import { getSdk } from "./generated/graphql";
 
 type HasuraAdapterArgs = {
   endpoint: string;
-  adminSecret: string;
+  authToken: string;
 };
 
 const transformDate = <T extends { [key: string]: unknown }>(
@@ -32,11 +32,11 @@ const transformDate = <T extends { [key: string]: unknown }>(
 
 export const HasuraAdapter = ({
   endpoint,
-  adminSecret,
+  authToken,
 }: HasuraAdapterArgs): Adapter => {
   const client = new GraphQLClient(endpoint, {
     headers: {
-      ["x-hasura-admin-secret"]: adminSecret,
+      Authorization: `Bearer ${authToken}`,
     },
   });
 
