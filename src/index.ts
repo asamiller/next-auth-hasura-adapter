@@ -46,19 +46,19 @@ export const HasuraAdapter = ({
     // User
     createUser: async (data) => {
       const res = await sdk.CreateUser({ data });
-      const user = transformDate(res?.insert_users_one, "emailVerified");
+      const user = transformDate(res?.insert_auth_users_one, "emailVerified");
 
       return user as AdapterUser;
     },
     getUser: async (id) => {
       const res = await sdk.GetUser({ id });
-      const user = transformDate(res?.users_by_pk, "emailVerified");
+      const user = transformDate(res?.auth_users_by_pk, "emailVerified");
 
       return user as AdapterUser;
     },
     getUserByEmail: async (email) => {
       const res = await sdk.GetUsers({ where: { email: { _eq: email } } });
-      const user = transformDate(res?.users?.[0], "emailVerified");
+      const user = transformDate(res?.auth_users?.[0], "emailVerified");
 
       if (!user) return null;
 
@@ -67,13 +67,13 @@ export const HasuraAdapter = ({
     getUserByAccount: async ({ providerAccountId, provider }) => {
       const res = await sdk.GetUsers({
         where: {
-          accounts: {
+          auth_accounts: {
             provider: { _eq: provider },
             providerAccountId: { _eq: providerAccountId },
           },
         },
       });
-      const user = transformDate(res?.users?.[0], "emailVerified");
+      const user = transformDate(res?.auth_users?.[0], "emailVerified");
 
       if (!user) return null;
 
@@ -81,27 +81,27 @@ export const HasuraAdapter = ({
     },
     updateUser: async ({ id, ...data }) => {
       const res = await sdk.UpdateUser({ id, data });
-      const user = transformDate(res?.update_users_by_pk, "emailVerified");
+      const user = transformDate(res?.update_auth_users_by_pk, "emailVerified");
 
       return user as AdapterUser;
     },
     deleteUser: async (id) => {
       const res = await sdk.DeleteUser({ id });
-      const user = transformDate(res?.delete_users_by_pk, "emailVerified");
+      const user = transformDate(res?.delete_auth_users_by_pk, "emailVerified");
 
       return user as AdapterUser;
     },
     // Session
     createSession: async (data) => {
       const res = await sdk.CreateSession({ data });
-      const session = transformDate(res?.insert_sessions_one, "expires");
+      const session = transformDate(res?.insert_auth_sessions_one, "expires");
 
       return session as AdapterSession;
     },
     getSessionAndUser: async (sessionToken) => {
       const res = await sdk.GetSession({ sessionToken });
-      const session = transformDate(res?.sessions?.[0], "expires");
-      const user = transformDate(session?.user, "emailVerified");
+      const session = transformDate(res?.auth_sessions?.[0], "expires");
+      const user = transformDate(session?.auth_user, "emailVerified");
 
       return {
         session: session as AdapterSession,
@@ -111,7 +111,7 @@ export const HasuraAdapter = ({
     updateSession: async ({ sessionToken, ...data }) => {
       const res = await sdk.UpdateSession({ sessionToken, data });
       const session = transformDate(
-        res?.update_sessions?.returning?.[0],
+        res?.update_auth_sessions?.returning?.[0],
         "expires",
       );
 
@@ -122,7 +122,7 @@ export const HasuraAdapter = ({
     deleteSession: async (sessionToken) => {
       const res = await sdk.DeleteSession({ sessionToken });
       const session = transformDate(
-        res?.delete_sessions?.returning?.[0],
+        res?.delete_auth_sessions?.returning?.[0],
         "expires",
       );
 
@@ -133,13 +133,13 @@ export const HasuraAdapter = ({
     // Account
     linkAccount: async (data) => {
       const res = await sdk.CreateAccount({ data });
-      const account = res?.insert_accounts_one;
+      const account = res?.insert_auth_accounts_one;
 
       return account as AdapterAccount;
     },
     unlinkAccount: async ({ providerAccountId, provider }) => {
       const res = await sdk.DeleteAccount({ provider, providerAccountId });
-      const account = res?.delete_accounts?.returning?.[0];
+      const account = res?.delete_auth_accounts?.returning?.[0];
 
       if (!account) return;
 
@@ -149,7 +149,7 @@ export const HasuraAdapter = ({
     createVerificationToken: async (data) => {
       const res = await sdk.CreateVerificationToken({ data });
       const verificationToken = transformDate(
-        res?.insert_verification_tokens_one,
+        res?.insert_auth_verification_tokens_one,
         "expires",
       );
 
@@ -158,7 +158,7 @@ export const HasuraAdapter = ({
     useVerificationToken: async ({ identifier, token }) => {
       const res = await sdk.DeleteVerificationToken({ identifier, token });
       const verificationToken = transformDate(
-        res?.delete_verification_tokens?.returning?.[0],
+        res?.delete_auth_verification_tokens?.returning?.[0],
         "expires",
       );
 

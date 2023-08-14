@@ -1,0 +1,3 @@
+table:
+  name: auth_verification_tokens
+  schema: public

@@ -1,5 +1,5 @@
 table:
-  name: accounts
+  name: auth_sessions
   schema: public
 object_relationships:
   - name: user

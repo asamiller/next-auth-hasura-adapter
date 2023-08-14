@@ -1,5 +1,5 @@
 query GetSession($sessionToken: String) {
-  sessions(where: { sessionToken: { _eq: $sessionToken } }) {
+  auth_sessions(where: { sessionToken: { _eq: $sessionToken } }) {
     ...Session
     user {
       ...User
@@ -7,14 +7,14 @@ query GetSession($sessionToken: String) {
   }
 }
 
-mutation CreateSession($data: sessions_insert_input!) {
-  insert_sessions_one(object: $data) {
+mutation CreateSession($data: auth_sessions_insert_input!) {
+  insert_auth_sessions_one(object: $data) {
     ...Session
   }
 }
 
-mutation UpdateSession($sessionToken: String, $data: sessions_set_input!) {
-  update_sessions(
+mutation UpdateSession($sessionToken: String, $data: auth_sessions_set_input!) {
+  update_auth_sessions(
     where: { sessionToken: { _eq: $sessionToken } }
     _set: $data
   ) {
@@ -25,7 +25,7 @@ mutation UpdateSession($sessionToken: String, $data: sessions_set_input!) {
 }
 
 mutation DeleteSession($sessionToken: String) {
-  delete_sessions(where: { sessionToken: { _eq: $sessionToken } }) {
+  delete_auth_sessions(where: { sessionToken: { _eq: $sessionToken } }) {
     returning {
       ...Session
     }

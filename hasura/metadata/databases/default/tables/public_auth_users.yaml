@@ -1,5 +1,5 @@
 table:
-  name: users
+  name: auth_users
   schema: public
 array_relationships:
   - name: accounts
@@ -7,12 +7,12 @@ array_relationships:
       foreign_key_constraint_on:
         column: userId
         table:
-          name: accounts
+          name: auth_accounts
           schema: public
   - name: sessions
     using:
       foreign_key_constraint_on:
         column: userId
         table:
-          name: sessions
+          name: auth_sessions
           schema: public

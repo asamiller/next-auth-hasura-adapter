@@ -1,4 +1,4 @@
-fragment User on users {
+fragment User on auth_users {
   __typename
   id
   name
@@ -7,7 +7,7 @@ fragment User on users {
   emailVerified
 }
 
-fragment Session on sessions {
+fragment Session on auth_sessions {
   __typename
   id
   userId
@@ -15,7 +15,7 @@ fragment Session on sessions {
   sessionToken
 }
 
-fragment Account on accounts {
+fragment Account on auth_accounts {
   __typename
   id
   type
@@ -33,7 +33,7 @@ fragment Account on accounts {
   oauth_token_secret
 }
 
-fragment VerificationToken on verification_tokens {
+fragment VerificationToken on auth_verification_tokens {
   __typename
   token
   expires
