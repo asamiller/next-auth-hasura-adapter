@@ -67,7 +67,7 @@ export const HasuraAdapter = ({
     getUserByAccount: async ({ providerAccountId, provider }) => {
       const res = await sdk.GetUsers({
         where: {
-          auth_accounts: {
+          accounts: {
             provider: { _eq: provider },
             providerAccountId: { _eq: providerAccountId },
           },
@@ -101,7 +101,7 @@ export const HasuraAdapter = ({
     getSessionAndUser: async (sessionToken) => {
       const res = await sdk.GetSession({ sessionToken });
       const session = transformDate(res?.auth_sessions?.[0], "expires");
-      const user = transformDate(session?.auth_user, "emailVerified");
+      const user = transformDate(session?.user, "emailVerified");
 
       return {
         session: session as AdapterSession,
