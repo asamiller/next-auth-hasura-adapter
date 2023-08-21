@@ -18,6 +18,7 @@ const HasuraAdapter = ({ endpoint, authToken, }) => {
     const client = new graphql_request_1.GraphQLClient(endpoint, {
         headers: {
             Authorization: `Bearer ${authToken}`,
+            "x-hasura-role": "admin",
         },
     });
     const sdk = (0, graphql_1.getSdk)(client);

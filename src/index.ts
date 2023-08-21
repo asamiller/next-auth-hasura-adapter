@@ -37,6 +37,7 @@ export const HasuraAdapter = ({
   const client = new GraphQLClient(endpoint, {
     headers: {
       Authorization: `Bearer ${authToken}`,
+      "x-hasura-role": "admin",
     },
   });
 
